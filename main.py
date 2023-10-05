@@ -1,58 +1,57 @@
-'''
-Projeto da disciplina de estatística aplicada
-
-Alunos:
-  - Augusto Preis Tomasi
-  - Kauã Machado Grathwohl
-  - João Vitor Brogni Vamerlati
-  - Arthur Romansini Fernandes
-  - Otávio Raupp Júnior
-
-Professor:
-  - Maria Emilia Da Silva De Bona Freitas
-'''
-
 import pandas as pd
 
-# Colunas necessárias para a análise e interpretação dos dados
-columns = [
-  # Escola possui laboratório de informática?
+colunas = [
   'IN_LABORATORIO_INFORMATICA',
-
-  # Escola possui computadores para uso?
   'IN_COMPUTADOR',
-  
-  # Escola possui Computadores de mesa em uso pelos alunos?
   'IN_DESKTOP_ALUNO',
-  
-  # Quantidade de computadores de mesa em uso pelos alunos
   'QT_DESKTOP_ALUNO',
-  
-  # Escola possui Computadores portáteis em uso pelos alunos?
   'IN_COMP_PORTATIL_ALUNO',
-  
-  # Quantidade de computadores portáteis em uso pelos alunos
   'QT_COMP_PORTATIL_ALUNO',
-  
-  # Escola possui internet para os alunos?
-  'IN_INTERNET_ALUNOS'
+  'IN_INTERNET_ALUNOS',
 ]
 
-# Arquivo importado pelo pandas
 file = pd.read_csv(
-  # Nome do arquivo a ser importado  
   'dados-criciuma.csv',
-
-  # Separador de colunas usado pelo arquivo
-  # Arquivos .CSV normalmente utilizam "," ou ";"
-  sep=';',
-
-  # Codificação do arquivo utf-8 aceitas caracteres especiais
-  encoding='utf-8',
-  
-  # Colunas do arquivo que serão utilizadas
-  usecols=columns
+  sep = ';',
+  encoding = 'utf-8',
+  usecols = colunas,
 )
 
-#Remove linhas inválidas
+file.replace(0, pd.NA, inplace=True)
+
 file = file.dropna()
+
+file = file.sort_values(by=['QT_DESKTOP_ALUNO', 'QT_COMP_PORTATIL_ALUNO'])
+
+media = {
+  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].mean(),
+  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].mean(),
+}
+
+mediana = {
+  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].median(),
+  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].median(),
+}
+
+moda = {
+  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].mode().iloc[0],
+  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].mode().iloc[0],
+}
+
+porcentis = {
+  # TODO
+}
+
+amplitude = {
+  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].max() - file['QT_DESKTOP_ALUNO'].min(),
+  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].max() - file['QT_COMP_PORTATIL_ALUNO'].min(),
+}
+
+desvioPadrao = {
+  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].std(),
+  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].std(),
+}
+
+variancia = {
+  # TODO
+}
