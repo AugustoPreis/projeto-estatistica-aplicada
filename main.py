@@ -1,4 +1,26 @@
 import pandas as pd
+import numpy as np
+
+def valores(pdArray):
+  return '{ ' + ', '.join(pdArray.values.astype(str)) + ' }'
+
+def calculaMedia(pdArray):
+  return np.mean(pdArray)
+
+def calculaMediana(pdArray):
+  return np.median(pdArray)
+
+def calculaModa(pdArray):
+  return pdArray.mode().iloc[0]
+
+def calculaAmplitude(pdArray):
+  return np.ptp(pdArray)
+
+def calculaDesvioPadrao(pdArray):
+  return np.std(pdArray).round(2)
+
+def calculaVariancia(pdArray):
+  return np.var(pdArray).round(2)
 
 colunas = [
   'IN_LABORATORIO_INFORMATICA',
@@ -21,37 +43,26 @@ file.replace(0, pd.NA, inplace=True)
 
 file = file.dropna()
 
-file = file.sort_values(by=['QT_DESKTOP_ALUNO', 'QT_COMP_PORTATIL_ALUNO'])
+file = file.astype(int)
 
-media = {
-  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].mean(),
-  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].mean(),
-}
-
-mediana = {
-  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].median(),
-  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].median(),
-}
-
-moda = {
-  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].mode().iloc[0],
-  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].mode().iloc[0],
-}
-
-porcentis = {
-  # TODO
-}
-
-amplitude = {
-  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].max() - file['QT_DESKTOP_ALUNO'].min(),
-  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].max() - file['QT_COMP_PORTATIL_ALUNO'].min(),
-}
-
-desvioPadrao = {
-  'QT_DESKTOP_ALUNO': file['QT_DESKTOP_ALUNO'].std(),
-  'QT_COMP_PORTATIL_ALUNO': file['QT_COMP_PORTATIL_ALUNO'].std(),
-}
-
-variancia = {
-  # TODO
-}
+print('--------------------------------------------')
+print('DESKTOPS POR ALUNO')
+print('--------------------------------------------')
+print(f'Valores: {valores(file["QT_DESKTOP_ALUNO"])}')
+print(f'Média: {calculaMedia(file["QT_DESKTOP_ALUNO"])}')
+print(f'Mediana: {calculaMediana(file["QT_DESKTOP_ALUNO"])}')
+print(f'Moda: {calculaModa(file["QT_DESKTOP_ALUNO"])}')
+print(f'Amplitude: {calculaAmplitude(file["QT_DESKTOP_ALUNO"])}')
+print(f'Desvio Padrão: {calculaDesvioPadrao(file["QT_DESKTOP_ALUNO"])}')
+print(f'Variância: {calculaVariancia(file["QT_DESKTOP_ALUNO"])}')
+print('\n')
+print('--------------------------------------------')
+print('COMPUTADORES PORTÁTEIS POR ALUNO')
+print('--------------------------------------------')
+print(f'Valores: {valores(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Média: {calculaMedia(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Mediana: {calculaMediana(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Moda: {calculaModa(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Amplitude: {calculaAmplitude(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Desvio Padrão: {calculaDesvioPadrao(file["QT_COMP_PORTATIL_ALUNO"])}')
+print(f'Variância: {calculaVariancia(file["QT_COMP_PORTATIL_ALUNO"])}')
